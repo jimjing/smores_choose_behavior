@@ -9,21 +9,23 @@ from geometry_msgs.msg import Pose, PoseArray
 class DataContainer(object):
     def __init__(self):
         self.name = ""
-        self.configuration_dict = {}
+        self.configuration = ""
         self.behavior_dict = {}
         self.path_dict = {} # All dicts are file_name: file_path
 
     def loadConfData(self, path):
         for (dirpath, dirnames, filenames) in os.walk(path):
             for f in filenames:
-                if f in self.configuration_dict.keys():
+                if self.configuration != "":
                     rospy.logwarn("Configuration {!r} already exsits.".format(f))
                 else:
-                    self.configuration_dict[f] = os.path.join(dirpath, f)
+                    self.configuration = os.path.join(dirpath, f)
 
     def loadBehaviorData(self, path):
         for (dirpath, dirnames, filenames) in os.walk(path):
             for f in filenames:
+                if f == "config.py":
+                    continue
                 if f in self.behavior_dict.keys():
                     rospy.logwarn("Behavior {!r} already exsits.".format(f))
                 else:
@@ -94,4 +96,3 @@ class DataFileLoader(object):
                 else:
                     self.data_dict[dirname] = self.loadData(os.path.join(data_file_directory, dirname))
             break
-

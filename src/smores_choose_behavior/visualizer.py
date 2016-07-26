@@ -44,7 +44,6 @@ class Visualizer(object):
                 id += 1
 
             path_marker_pub.publish(m_array)
-            rospy.loginfo("Publish path")
             rate.sleep()
 
     def setPubPath(self, path):

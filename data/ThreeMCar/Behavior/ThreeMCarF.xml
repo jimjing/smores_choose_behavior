@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <Behavior xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="">
   <RobotStates>
-    <RobotState name="9cd7aafe-d6de-49d9-9317-b82fd183ee1f">
+    <RobotState name="f849b439-12bd-458c-91b9-8a35316cbe96">
       <anchorModuleName>SMORES_1</anchorModuleName>
-      <period>6</period>
+      <period>30</period>
       <ModuleStates>
         <ModuleState name="SMORES_0">
           <position>
-            <x>1.49384141E-06</x>
-            <y>0.999996662</y>
-            <z>-7.61593739E-08</z>
+            <x>-0.954561</x>
+            <y>0.201981366</y>
+            <z>-2.93689425E-07</z>
           </position>
           <rotation>
             <x>-0.6039966</x>
-            <y>0.367679447</y>
+            <y>0.367679477</y>
             <z>-0.367679477</z>
             <w>0.6039966</w>
             <eulerAngles>
@@ -22,17 +22,17 @@
               <z>270</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>30</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>60</targetValue>
-              <period>6</period>
+              <period>30</period>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>60</targetValue>
-              <period>6</period>
+              <period>30</period>
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
@@ -48,13 +48,13 @@
           <PartStates>
             <PartState name="BackPlate">
               <position>
-                <x>1.49384141E-06</x>
-                <y>0.999996662</y>
-                <z>-7.61593739E-08</z>
+                <x>-0.954561</x>
+                <y>0.201981366</y>
+                <z>-2.93689425E-07</z>
               </position>
               <rotation>
                 <x>-0.6039966</x>
-                <y>0.367679447</y>
+                <y>0.367679477</y>
                 <z>-0.367679477</z>
                 <w>0.6039966</w>
                 <eulerAngles>
@@ -66,73 +66,73 @@
             </PartState>
             <PartState name="Body">
               <position>
-                <x>1.475215E-06</x>
-                <y>0.999996662</y>
-                <z>-7.604831E-08</z>
+                <x>-0.954560935</x>
+                <y>0.2019813</y>
+                <z>-2.881843E-07</z>
               </position>
               <rotation>
                 <x>-0.6990279</x>
-                <y>-0.106582791</y>
-                <z>0.1065827</z>
-                <w>0.699028</w>
+                <y>-0.106582761</y>
+                <z>0.106582671</z>
+                <w>0.699028134</w>
                 <eulerAngles>
                   <x>287.338562</x>
-                  <y>270.000031</y>
-                  <z>89.99997</z>
+                  <y>270.0001</y>
+                  <z>89.99994</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="RightWheel">
               <position>
-                <x>1.54565748E-06</x>
-                <y>0.999996662</y>
-                <z>2.08616257E-07</z>
+                <x>-0.954560935</x>
+                <y>0.2019813</y>
+                <z>-5.96046448E-08</z>
               </position>
               <rotation>
-                <x>0.6018814</x>
-                <y>-0.371131867</y>
-                <z>0.371131837</z>
-                <w>-0.6018814</w>
+                <x>0.6955328</x>
+                <y>-0.127413452</y>
+                <z>0.127413467</z>
+                <w>-0.695532739</w>
                 <eulerAngles>
-                  <x>333.3176</x>
-                  <y>90</y>
+                  <x>290.761658</x>
+                  <y>90.0000153</y>
                   <z>270</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="FrontWheel">
               <position>
-                <x>1.49011612E-06</x>
-                <y>0.9999968</y>
-                <z>-7.334196E-08</z>
+                <x>-0.954560935</x>
+                <y>0.2019813</y>
+                <z>-2.75671482E-07</z>
               </position>
               <rotation>
                 <x>-0.699027956</x>
-                <y>-0.106582753</y>
-                <z>0.106582664</z>
-                <w>0.699028</w>
+                <y>-0.106582731</y>
+                <z>0.106582671</z>
+                <w>0.6990281</w>
                 <eulerAngles>
                   <x>287.338562</x>
-                  <y>270.000031</y>
-                  <z>89.99998</z>
+                  <y>270.000061</y>
+                  <z>89.99997</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="LeftWheel">
               <position>
-                <x>1.49441951E-06</x>
-                <y>0.999996543</y>
-                <z>-1.78813934E-07</z>
+                <x>-0.9545609</x>
+                <y>0.201981425</y>
+                <z>-4.7683713E-07</z>
               </position>
               <rotation>
-                <x>0.5990523</x>
-                <y>-0.3756812</y>
-                <z>0.375681281</z>
-                <w>-0.5990523</w>
+                <x>-0.0481540263</x>
+                <y>-0.705465257</y>
+                <z>0.705465257</z>
+                <w>0.0481540263</w>
                 <eulerAngles>
-                  <x>334.1858</x>
-                  <y>90</y>
-                  <z>270</z>
+                  <x>82.1903</x>
+                  <y>270</y>
+                  <z>90</z>
                 </eulerAngles>
               </rotation>
             </PartState>
@@ -140,19 +140,19 @@
         </ModuleState>
         <ModuleState name="SMORES_1">
           <position>
-            <x>0.954562</x>
-            <y>1.29801381</y>
-            <z>6.858565E-08</z>
+            <x>0</x>
+            <y>0.5</y>
+            <z>0</z>
           </position>
           <rotation>
-            <x>-0.699027956</x>
-            <y>-0.106582768</y>
-            <z>0.106582686</z>
-            <w>0.6990281</w>
+            <x>-0.6990279</x>
+            <y>-0.106582731</y>
+            <z>0.106582955</z>
+            <w>0.699028134</w>
             <eulerAngles>
               <x>287.338562</x>
-              <y>270.000061</y>
-              <z>89.99996</z>
+              <y>270.0001</y>
+              <z>89.99995</z>
             </eulerAngles>
           </rotation>
           <period>3</period>
@@ -181,91 +181,91 @@
           <PartStates>
             <PartState name="BackPlate">
               <position>
-                <x>0.954562</x>
-                <y>1.29801381</y>
-                <z>6.858565E-08</z>
+                <x>0</x>
+                <y>0.5</y>
+                <z>0</z>
               </position>
               <rotation>
-                <x>-0.699027956</x>
-                <y>-0.106582768</y>
-                <z>0.106582686</z>
-                <w>0.6990281</w>
+                <x>-0.6990279</x>
+                <y>-0.106582731</y>
+                <z>0.106582955</z>
+                <w>0.699028134</w>
                 <eulerAngles>
                   <x>287.338562</x>
-                  <y>270.000061</y>
-                  <z>89.99996</z>
+                  <y>270.0001</y>
+                  <z>89.99995</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="Body">
               <position>
-                <x>0.954562068</x>
-                <y>1.29801381</y>
-                <z>6.479968E-08</z>
+                <x>0</x>
+                <y>0.5</y>
+                <z>2.46291165E-09</z>
               </position>
               <rotation>
-                <x>-0.678578258</x>
-                <y>0.198825255</y>
-                <z>-0.1988253</z>
-                <w>0.6785784</w>
+                <x>-0.6785784</x>
+                <y>0.198825315</y>
+                <z>-0.198825076</z>
+                <w>0.678578436</w>
                 <eulerAngles>
-                  <x>302.661469</x>
-                  <y>89.99998</y>
+                  <x>302.661438</x>
+                  <y>90</y>
                   <z>270.000031</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="RightWheel">
               <position>
-                <x>0.954562</x>
-                <y>1.29801381</y>
-                <z>2.98023224E-07</z>
+                <x>0</x>
+                <y>0.5</y>
+                <z>2.6822093E-07</z>
               </position>
               <rotation>
-                <x>-0.699027956</x>
-                <y>-0.106582776</y>
-                <z>0.106582642</z>
-                <w>0.699028134</w>
+                <x>-0.699027836</x>
+                <y>-0.106582746</y>
+                <z>0.106582962</z>
+                <w>0.6990282</w>
                 <eulerAngles>
-                  <x>287.338531</x>
-                  <y>270.000061</y>
-                  <z>89.99994</z>
+                  <x>287.338562</x>
+                  <y>270.000122</y>
+                  <z>89.9999161</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="FrontWheel">
               <position>
-                <x>0.9545622</x>
-                <y>1.29801369</y>
-                <z>8.2194525E-08</z>
+                <x>0</x>
+                <y>0.50000006</y>
+                <z>5.339416E-09</z>
               </position>
               <rotation>
-                <x>-0.6785782</x>
-                <y>0.198825225</y>
-                <z>-0.198825285</z>
+                <x>-0.6785784</x>
+                <y>0.198825315</y>
+                <z>-0.198825061</z>
                 <w>0.6785784</w>
                 <eulerAngles>
-                  <x>302.661469</x>
-                  <y>89.99997</y>
+                  <x>302.6614</x>
+                  <y>90.00001</y>
                   <z>270.000031</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="LeftWheel">
               <position>
-                <x>0.954562</x>
-                <y>1.29801393</y>
-                <z>-1.49011612E-07</z>
+                <x>0</x>
+                <y>0.5</y>
+                <z>-2.38418664E-07</z>
               </position>
               <rotation>
-                <x>-0.699027956</x>
-                <y>-0.106582761</y>
-                <z>0.106582657</z>
-                <w>0.699028134</w>
+                <x>-0.699027836</x>
+                <y>-0.106582746</y>
+                <z>0.106582962</z>
+                <w>0.6990282</w>
                 <eulerAngles>
-                  <x>287.338531</x>
-                  <y>270.000061</y>
-                  <z>89.99994</z>
+                  <x>287.338562</x>
+                  <y>270.000122</y>
+                  <z>89.9999161</z>
                 </eulerAngles>
               </rotation>
             </PartState>
@@ -273,32 +273,32 @@
         </ModuleState>
         <ModuleState name="SMORES_2">
           <position>
-            <x>1.79643655</x>
-            <y>0.758339465</y>
-            <z>1.21503632E-07</z>
+            <x>0.841874659</x>
+            <y>-0.0396736264</y>
+            <z>-3.0166234E-07</z>
           </position>
           <rotation>
-            <x>-0.6785784</x>
-            <y>0.19882521</y>
-            <z>-0.198825225</z>
-            <w>0.6785783</w>
+            <x>-0.6785782</x>
+            <y>0.198825225</y>
+            <z>-0.1988252</z>
+            <w>0.6785784</w>
             <eulerAngles>
               <x>302.661438</x>
-              <y>90.00001</y>
-              <z>270</z>
+              <y>89.99998</y>
+              <z>270.000031</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>30</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>60</targetValue>
-              <period>6</period>
+              <period>30</period>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>60</targetValue>
-              <period>6</period>
+              <period>30</period>
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
@@ -314,91 +314,91 @@
           <PartStates>
             <PartState name="BackPlate">
               <position>
-                <x>1.79643655</x>
-                <y>0.758339465</y>
-                <z>1.21503632E-07</z>
+                <x>0.841874659</x>
+                <y>-0.0396736264</y>
+                <z>-3.0166234E-07</z>
               </position>
               <rotation>
-                <x>-0.6785784</x>
-                <y>0.19882521</y>
-                <z>-0.198825225</z>
-                <w>0.6785783</w>
+                <x>-0.6785782</x>
+                <y>0.198825225</y>
+                <z>-0.1988252</z>
+                <w>0.6785784</w>
                 <eulerAngles>
                   <x>302.661438</x>
-                  <y>90.00001</y>
-                  <z>270</z>
+                  <y>89.99998</y>
+                  <z>270.000031</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="Body">
               <position>
-                <x>1.79643655</x>
-                <y>0.758339465</y>
-                <z>1.2212513E-07</z>
+                <x>0.841874659</x>
+                <y>-0.0396736264</y>
+                <z>-3.0166666E-07</z>
               </position>
               <rotation>
-                <x>-0.699027956</x>
-                <y>-0.106582776</y>
-                <z>0.106582843</z>
-                <w>0.699028</w>
+                <x>-0.6990279</x>
+                <y>-0.10658285</y>
+                <z>0.106582761</z>
+                <w>0.699028134</w>
                 <eulerAngles>
                   <x>287.338562</x>
-                  <y>270.000031</y>
-                  <z>89.9999847</z>
+                  <y>270.000061</y>
+                  <z>89.99994</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="RightWheel">
               <position>
-                <x>1.79643655</x>
-                <y>0.7583396</y>
-                <z>2.38418579E-07</z>
+                <x>0.841874361</x>
+                <y>-0.0396738052</y>
+                <z>-5.960466E-08</z>
               </position>
               <rotation>
-                <x>0.677460968</x>
-                <y>-0.202599958</y>
-                <z>0.202599928</z>
-                <w>-0.6774609</w>
+                <x>-0.698850632</x>
+                <y>0.107739054</y>
+                <z>-0.107739128</z>
+                <w>0.6988508</w>
                 <eulerAngles>
-                  <x>303.2994</x>
-                  <y>90.00001</y>
-                  <z>270</z>
+                  <x>287.528137</x>
+                  <y>89.9999542</y>
+                  <z>270.000061</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="FrontWheel">
               <position>
-                <x>1.79643655</x>
-                <y>0.7583394</y>
-                <z>1.119575E-07</z>
+                <x>0.8418747</x>
+                <y>-0.039673686</y>
+                <z>-2.833164E-07</z>
               </position>
               <rotation>
-                <x>-0.699027956</x>
-                <y>-0.106582768</y>
-                <z>0.106582813</z>
-                <w>0.699028</w>
+                <x>-0.6990279</x>
+                <y>-0.10658285</y>
+                <z>0.106582731</z>
+                <w>0.699028134</w>
                 <eulerAngles>
                   <x>287.338562</x>
-                  <y>270.000031</y>
-                  <z>89.9999847</z>
+                  <y>270.000061</y>
+                  <z>89.99994</z>
                 </eulerAngles>
               </rotation>
             </PartState>
             <PartState name="LeftWheel">
               <position>
-                <x>1.79643667</x>
-                <y>0.7583394</y>
-                <z>-5.96046448E-08</z>
+                <x>0.8418745</x>
+                <y>-0.0396735072</y>
+                <z>-6.2584877E-07</z>
               </position>
               <rotation>
-                <x>0.675914</x>
-                <y>-0.207702413</y>
-                <z>0.207702413</z>
-                <w>-0.675914</w>
+                <x>0.02821979</x>
+                <y>0.706543565</y>
+                <z>-0.706543446</z>
+                <w>-0.0282197148</w>
                 <eulerAngles>
-                  <x>304.163452</x>
-                  <y>90</y>
-                  <z>270</z>
+                  <x>85.42568</x>
+                  <y>269.9999</y>
+                  <z>89.99989</z>
                 </eulerAngles>
               </rotation>
             </PartState>
