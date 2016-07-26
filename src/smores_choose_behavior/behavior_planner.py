@@ -10,14 +10,15 @@ from smores_choose_behavior.data_file_loader import DataFileLoader
 from smores_choose_behavior.point_cloud_loader import PointCloudLoader
 from smores_choose_behavior.visualizer import Visualizer
 from collision_detection.srv import *
-from geometry_msgs.msg import Pose, PoseArray
+from geometry_msgs.msg import Pose, PoseArray, Vector3
 
 class BehaviorPlanner(object):
     def __init__(self):
         self.DFL = None
         self.PCL = None
         self.Vis = None
-        self.tf = None
+        #self.tf = None
+        self.blobCoords = None # [x,y,z]
         self._collision_tolerance = 0.06 # meters
 
         self._current_data = None
@@ -33,7 +34,8 @@ class BehaviorPlanner(object):
         self.DFL = DataFileLoader(data_file_directory = "/home/jim/Projects/smores_ros/src/smores_choose_behavior/data")
         self.DFL.loadAllData()
         self.Vis = Visualizer()
-        self.tf = TransformListener()
+        #self.tf = TransformListener()
+        self.blobPt_sub = rospy.Subscriber("blobPt", Vector3, self.blobPt_callback)
         self._current_data = self.DFL.data_dict["ThreeMCar"]
         #self.PCL = PointCloudLoader(topic='/cloud_pcd')
 
@@ -43,6 +45,10 @@ class BehaviorPlanner(object):
     def main(self):
         self.run()
         self.shutdown()
+
+    def blobPt_callback(self, data):
+        ''' Callback function for topic with location of object being tracked'''
+        self.blobCoords = [data.x, data.y, data.z]
 
     def run(self):
 
@@ -64,7 +70,7 @@ class BehaviorPlanner(object):
             position, quaternion = self.tf.lookupTransform("/camera_link", "/test", t)
             return position
         else:
-            pdb.set_trace()
+            #pdb.set_trace()
             rospy.logerr("Cannot find transform !!!")
             return None
 
