@@ -1,0 +1,4 @@
+input: [x,y]
+output:
+    para_LW: x+y
+    para_RW: x-y

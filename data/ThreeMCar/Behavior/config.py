@@ -1,4 +1,4 @@
-# config.py 
+# config.py
 
 """
 Simulator names:
@@ -9,16 +9,15 @@ Simulator names:
 
 from numpy import pi
 
-angle = 90 
-ModuleMap = {'SMORES_0':, 'SMORES_1':12, 'SMORES_2':11 } 
-                        }
-NeutralPositions = {} 
+angle = 90
+ModuleMap = {'SMORES_0':2, 'SMORES_1':4, 'SMORES_2':12 }
+NeutralPositions = {}
 
 disabledDof=[]
 speed_scale=0.7
 behaviorFiles = {
-   'forward':'ThreeMCarF.xml',
-   'right':  'ThreeMCarR.xml',
-   'left':  'ThreeMCarL.xml',
+   'ThreeMCarF.xml':'ThreeMCarF.xml',
+   'ThreeMCarR.xml':  'ThreeMCarR.xml',
+   'ThreeMCarL.xml':  'ThreeMCarL.xml',
    }
 

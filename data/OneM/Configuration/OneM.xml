@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<RobotStateObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="">
+  <anchorModuleName>SMORES_0</anchorModuleName>
+  <period>0</period>
+  <ModuleStates>
+    <ModuleState name="SMORES_0">
+      <position>
+        <x>0</x>
+        <y>0.5</y>
+        <z>0</z>
+      </position>
+      <rotation>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>0</y>
+          <z>0</z>
+        </eulerAngles>
+      </rotation>
+      <period>0</period>
+      <JointCommands>
+        <JointCommand name="LeftWheel">
+          <commandType>Position</commandType>
+          <targetValue>0</targetValue>
+          <period>0</period>
+        </JointCommand>
+        <JointCommand name="RightWheel">
+          <commandType>Position</commandType>
+          <targetValue>0</targetValue>
+          <period>0</period>
+        </JointCommand>
+        <JointCommand name="Body">
+          <commandType>Position</commandType>
+          <targetValue>0</targetValue>
+          <period>0</period>
+        </JointCommand>
+        <JointCommand name="FrontWheel">
+          <commandType>Position</commandType>
+          <targetValue>0</targetValue>
+          <period>0</period>
+        </JointCommand>
+      </JointCommands>
+      <PartStates>
+        <PartState name="BackPlate">
+          <position>
+            <x>0</x>
+            <y>0.5</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>-0.7071068</x>
+            <y>0</y>
+            <z>0</z>
+            <w>0.7071068</w>
+            <eulerAngles>
+              <x>270</x>
+              <y>0</y>
+              <z>0</z>
+            </eulerAngles>
+          </rotation>
+        </PartState>
+        <PartState name="Body">
+          <position>
+            <x>0</x>
+            <y>0.5</y>
+            <z>0</z>
+          </position>
+          <rotation>
+            <x>-0.7071068</x>
+            <y>2.910383E-11</y>
+            <z>-3.223022E-11</z>
+            <w>0.7071068</w>
+            <eulerAngles>
+              <x>270</x>
+              <y>4.716477E-09</y>
+              <z>0</z>
+            </eulerAngles>
+          </rotation>
+        </PartState>
+        <PartState name="RightWheel">
+          <position>
+            <x>5.960466E-08</x>
+            <y>0.5</y>
+            <z>2.38418579E-07</z>
+          </position>
+          <rotation>
+            <x>-0.7071068</x>
+            <y>2.98023224E-08</y>
+            <z>4.47034836E-08</z>
+            <w>0.7071068</w>
+            <eulerAngles>
+              <x>270</x>
+              <y>4.829673E-06</y>
+              <z>0</z>
+            </eulerAngles>
+          </rotation>
+        </PartState>
+        <PartState name="FrontWheel">
+          <position>
+            <x>-8.940697E-08</x>
+            <y>0.5</y>
+            <z>-1.012187E-10</z>
+          </position>
+          <rotation>
+            <x>-0.7071068</x>
+            <y>-1.96678247E-11</y>
+            <z>-2.46685576E-19</z>
+            <w>0.7071068</w>
+            <eulerAngles>
+              <x>270</x>
+              <y>-3.18730731E-09</y>
+              <z>0</z>
+            </eulerAngles>
+          </rotation>
+        </PartState>
+        <PartState name="LeftWheel">
+          <position>
+            <x>-6.332995E-08</x>
+            <y>0.5</y>
+            <z>-2.38418579E-07</z>
+          </position>
+          <rotation>
+            <x>-0.7071068</x>
+            <y>2.98023224E-08</y>
+            <z>4.47034836E-08</z>
+            <w>0.7071068</w>
+            <eulerAngles>
+              <x>270</x>
+              <y>4.829673E-06</y>
+              <z>0</z>
+            </eulerAngles>
+          </rotation>
+        </PartState>
+      </PartStates>
+    </ModuleState>
+  </ModuleStates>
+  <Connections />
+</RobotStateObject>

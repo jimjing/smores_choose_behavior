@@ -5,13 +5,15 @@ import logging
 import xml.etree.ElementTree as ET
 import rospy
 from geometry_msgs.msg import Pose, PoseArray
+import yaml
 
 class DataContainer(object):
     def __init__(self):
         self.name = ""
         self.configuration = ""
-        self.behavior_dict = {}
-        self.path_dict = {} # All dicts are file_name: file_path
+        self.behavior_dict = {} # file_name: file_path
+        self.para_dict = {} # behavior_file_name: parameter_dict
+        self.path_dict = {} # file_name: file_path
 
     def loadConfData(self, path):
         for (dirpath, dirnames, filenames) in os.walk(path):
@@ -26,7 +28,10 @@ class DataContainer(object):
             for f in filenames:
                 if f == "config.py":
                     continue
-                if f in self.behavior_dict.keys():
+                if f.endswith(".yaml"):
+                    self.para_dict[f.replace("yaml","xml")] = self._parseBehaviorConfig(os.path.join(dirpath, f))
+                    print self.para_dict
+                elif f in self.behavior_dict.keys():
                     rospy.logwarn("Behavior {!r} already exsits.".format(f))
                 else:
                     self.behavior_dict[f] = os.path.join(dirpath, f)
@@ -62,6 +67,11 @@ class DataContainer(object):
                 path.append(p)
 
         return path
+
+    def _parseBehaviorConfig(self, file_path):
+        with open(file_path, 'r') as f:
+            doc = yaml.load(f)
+        return doc
 
 class DataFileLoader(object):
     def __init__(self, data_file_directory=""):
