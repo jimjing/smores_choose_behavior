@@ -165,13 +165,13 @@
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
               <period>3</period>
-              <parametricValue>0</parametricValue>
+              <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
               <period>3</period>
-              <parametricValue>0</parametricValue>
+              <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
