@@ -175,7 +175,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -449,7 +449,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -586,7 +586,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -1141,7 +1141,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -1415,7 +1415,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -1552,7 +1552,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -2107,7 +2107,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -2381,7 +2381,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -2518,7 +2518,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -3073,7 +3073,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -3347,7 +3347,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -3484,7 +3484,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -4039,7 +4039,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -4313,7 +4313,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -4450,7 +4450,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -5005,7 +5005,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -5279,7 +5279,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -5416,7 +5416,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -5971,7 +5971,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -6245,7 +6245,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
@@ -6382,7 +6382,7 @@
             </JointCommand>
             <JointCommand name="Body">
               <commandType>Position</commandType>
-              <targetValue>-89</targetValue>
+              <targetValue>-80</targetValue>
               <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
