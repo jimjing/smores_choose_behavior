@@ -15,7 +15,7 @@ ModuleMap = {'SMORES_0':13, 'SMORES_1':12, 'SMORES_2':14, 'SMORES_3':3,
              'SMORES_4':16, 'SMORES_5':9,'SMORES_6':8,}
 NeutralPositions = {}
 
-disabledDof=['pan']
+disabledDof=['tilt']
 speed_scale=0.7
 behaviorFiles = {
    'SevenMCarDiff.xml':'SevenMCarDiff.xml',
