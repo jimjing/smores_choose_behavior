@@ -2,6 +2,7 @@ input:
     x: self.blob_coords[0]
     y: self.blob_coords[1]
 output:
-    para_LW:  50 + x/6.0 * 0.5 
-    para_RW:  -(50 - x/6.0 * 0.5)
+    para_V:  50
+    para_W:  x/10.0
+    para_NW:  -x/10.0
 

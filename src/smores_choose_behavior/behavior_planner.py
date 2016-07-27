@@ -3,6 +3,10 @@
 import numpy as np
 import pdb
 
+import sys
+sys.path.insert(0,"/home/jim/Embedded/ecosystem/smores_build/smores_reconfig/python/")
+import MissionPlayer
+
 import rospy
 from tf import TransformListener
 
@@ -17,13 +21,12 @@ class BehaviorPlanner(object):
         self.DFL = None
         self.PCL = None
         self.Vis = None
-        #self.tf = None
-        self.blobCoords = None # [x,y,z]
+        self.blob_coords = None # [x,y,z]
+        self.MP = None
         self._collision_tolerance = 0.06 # meters
+        self.b_name = "ThreeMCar"
 
         self._current_data = None
-        self._current_behavior_list = []
-        self._current_path_list = []
 
         rospy.init_node('SMORES_Behavior_Planner', anonymous=True, log_level=rospy.DEBUG)
         rospy.loginfo("In BehaviorPlanner")
@@ -34,9 +37,10 @@ class BehaviorPlanner(object):
         self.DFL = DataFileLoader(data_file_directory = "/home/jim/Projects/smores_ros/src/smores_choose_behavior/data")
         self.DFL.loadAllData()
         self.Vis = Visualizer()
-        #self.tf = TransformListener()
         self.blobPt_sub = rospy.Subscriber("blobPt", Vector3, self.blobPt_callback)
-        self._current_data = self.DFL.data_dict["ThreeMCar"]
+        self._current_data = self.DFL.data_dict[self.b_name]
+        self.blob_coords = [0.0,0.0,0.0]
+        self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format(self.b_name))
         #self.PCL = PointCloudLoader(topic='/cloud_pcd')
 
     def shutdown(self):
@@ -48,56 +52,30 @@ class BehaviorPlanner(object):
 
     def blobPt_callback(self, data):
         ''' Callback function for topic with location of object being tracked'''
-        self.blobCoords = [data.x, data.y, data.z]
+        self.blob_coords = [data.x, data.y, data.z]
+
+    def input2Output(self, para_dict):
+
+        output_mapping = {}
+
+        for input_name, input_value in para_dict["input"].iteritems():
+            exec_str = "{}={}".format(input_name, input_value)
+            exec(exec_str)
+        for output_name, output_value in para_dict["output"].iteritems():
+            exec("{}={}".format(output_name, output_value))
+            output_mapping[output_name] = eval(output_name)
+        return output_mapping
 
     def run(self):
-
+        rate = rospy.Rate(2)
         while not rospy.is_shutdown():
-            self.rankPathWithData(self._current_data)
-
-            if self._current_path_list == []:
-                rospy.logerr("The path list is empty!")
-                return
-
-            for path_file_name in self._current_path_list:
-                rospy.loginfo("Checking path {!r}".format(path_file_name))
-                self._checkCollisionBehaviorWithPointCloud(self._current_data.path_dict[path_file_name])
+            para_mapping = self.input2Output(self._current_data.para_dict[self.b_name + "Diff.xml"])
+            rospy.logerr(para_mapping)
+            rate.sleep()
+            self.MP.playBehavior(self.b_name + "Diff.xml", para_mapping)
 
     def getGoalPose(self):
-        self.tf.waitForTransform("/camera_link", "/test", rospy.Time(), rospy.Duration(4.0))
-        if self.tf.frameExists("/camera_link") and self.tf.frameExists("/test"):
-            t = self.tf.getLatestCommonTime("/camera_link", "/test")
-            position, quaternion = self.tf.lookupTransform("/camera_link", "/test", t)
-            return position
-        else:
-            #pdb.set_trace()
-            rospy.logerr("Cannot find transform !!!")
-            return None
-
-    def rankPathWithData(self, data=None):
-        if data is None:
-            data = self._current_data
-
-        pose = self.getGoalPose()
-        if pose is None:
-            self._current_path_list = []
-            self._current_behavior_list = []
-            return
-
-        dist_list = []
-        path_list = []
-        for path_file_name, path in data.path_dict.iteritems():
-            pt = [path[-1].position.x, path[-1].position.y, path[-1].position.z]
-            dist_list.append(self.calcDist(pose, pt))
-            path_list.append(path_file_name)
-
-        sorted_indices = [i[0] for i in sorted(enumerate(dist_list), key=lambda x:x[1])]
-
-        self._current_path_list = [path_list[i] for i in sorted_indices]
-        self._current_behavior_list = [x.lstrip("R_") for x in self._current_path_list]
-
-    def calcDist(self, pt1, pt2):
-        return np.linalg.norm(np.array(pt1)-np.array(pt2))
+        return self.blob_coords
 
     def _checkAllPaths(self):
         for data_dir, data in self.DFL.data_dict.iteritems():

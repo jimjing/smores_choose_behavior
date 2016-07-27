@@ -30,7 +30,6 @@ class DataContainer(object):
                     continue
                 if f.endswith(".yaml"):
                     self.para_dict[f.replace("yaml","xml")] = self._parseBehaviorConfig(os.path.join(dirpath, f))
-                    print self.para_dict
                 elif f in self.behavior_dict.keys():
                     rospy.logwarn("Behavior {!r} already exsits.".format(f))
                 else:
