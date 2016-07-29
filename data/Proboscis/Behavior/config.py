@@ -1,7 +1,7 @@
 # config.py
-import sys
-sys.path.append('../..')
-import name_map
+#import sys
+#sys.path.append('../..')
+from name_map import *
 
 """
 Simulator names:
