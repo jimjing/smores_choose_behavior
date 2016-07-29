@@ -2,6 +2,8 @@
 
 import numpy as np
 import time
+from threading import Timer, Thread
+from aenum import Enum
 
 import sys
 sys.path.insert(0,"/home/jim/Embedded/ecosystem/smores_build/smores_reconfig/python/")
@@ -17,6 +19,11 @@ from smores_choose_behavior.visualizer import Visualizer
 from collision_detection.srv import *
 from geometry_msgs.msg import Pose, PoseArray, Vector3
 
+class RobotMission(Enum):
+    Explore = 1
+    ToObject = 2
+    Idle = 3
+
 class BehaviorPlanner(object):
     def __init__(self):
         self.DFL = None
@@ -28,6 +35,9 @@ class BehaviorPlanner(object):
         self.b_name = "SevenMCar"
         self.last_cmd_update_time = None
         self._timeout = 0.0
+        self._robot_mission_state = None
+        self._blob_reset_timer = None
+        self._cmd_reset_timer = None
 
         self._current_data = None
 
@@ -41,37 +51,75 @@ class BehaviorPlanner(object):
         self.DFL.loadAllData()
         self.Vis = Visualizer()
 
-        rospy.Subscriber("blobPt", Vector3, self.blobPt_callback)
-        rospy.Subscriber("/mobile_base/commands/velocity", Twist, self.getCMD_callback)
+        #rospy.Subscriber("blobPt", Vector3, self.blobPt_callback)
+        #rospy.Subscriber("/mobile_base/commands/velocity", Twist, self.getCMD_callback)
 
         self._current_data = self.DFL.data_dict[self.b_name]
         self.blob_coords = [0.0,0.0,0.0]
         self._timeout = 5.0
         self._current_cmd = Twist()
+        self._blob_reset_timer = Timer(self._timeout, self.resetRobotState)
+        self._cmd_reset_timer = Timer(self._timeout, self.resetRobotState)
         self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format(self.b_name))
+        self._robot_mission_state = RobotMission.Idle
         #self.PCL = PointCloudLoader(topic='/cloud_pcd')
+        t = Thread(target=self.fakeSignal)
+        t.setDaemon(True)
+        t.start()
+
+    def fakeSignal(self):
+        while not rospy.is_shutdown():
+            cmd = raw_input("e for explore, o for object: ")
+            if cmd  == 'e':
+                self.getCMD_callback(None)
+            elif cmd  == 'o':
+                self.blobPt_callback(None)
+            cmd = ""
+
+    def setRobotState(self, state):
+        if state == self._robot_mission_state:
+            return
+        rospy.loginfo("Switching robot mission from {} to {}.".format(self._robot_mission_state, state))
+        self._robot_mission_state = state
+
+    def resetRobotState(self):
+        rospy.loginfo("Reset state")
+        self.setRobotState(RobotMission.Idle)
 
     def shutdown(self):
         self.Vis.stop()
 
     def main(self):
-        self.last_cmd_update_time = time.time()
         self.run()
         self.shutdown()
 
     def blobPt_callback(self, data):
         ''' Callback function for topic with location of object being tracked'''
-        self.blob_coords = [data.x, data.y, data.z]
+        if data is not None:
+            self.blob_coords = [data.x, data.y, data.z]
+        self.setRobotState(RobotMission.ToObject)
+        if self._blob_reset_timer.is_alive():
+            self._blob_reset_timer.cancel()
+            time.sleep(0.1)
+        self._blob_reset_timer = Timer(self._timeout, self.resetRobotState)
+        self._blob_reset_timer.start()
 
     def getCMD_callback(self, data):
         ''' Callback function for topic with location of object being tracked'''
-        self._current_cmd = data
-        self.last_cmd_update_time = time.time()
+        if data is not None:
+            self._current_cmd = data
+        if self._robot_mission_state != RobotMission.ToObject:
+            self.setRobotState(RobotMission.Explore)
+
+            if self._cmd_reset_timer.is_alive():
+                self._cmd_reset_timer.cancel()
+                time.sleep(0.1)
+            self._cmd_reset_timer= Timer(self._timeout, self.resetRobotState)
+            self._cmd_reset_timer.start()
 
     def input2Output(self, para_dict):
 
         output_mapping = {}
-
         for input_name, input_value in para_dict["input"].iteritems():
             exec_str = "{}={}".format(input_name, input_value)
             exec(exec_str)
@@ -86,13 +134,10 @@ class BehaviorPlanner(object):
             para_mapping = self.input2Output(self._current_data.para_dict[self.b_name + "Diff.xml"])
             rospy.logdebug(para_mapping)
             rate.sleep()
-            if time.time() - self.last_cmd_update_time < self._timeout:
+            if self._robot_mission_state != RobotMission.Idle:
                 self.MP.playBehavior(self.b_name + "Diff.xml", para_mapping)
             else:
-                rospy.logwarn("Have not got a command for more than {} seconds. Stop playing behaviors.".format(self._timeout))
-
-    def getGoalPose(self):
-        return self.blob_coords
+                rospy.logwarn("Have not got a command for more than {} seconds. System idling.".format(self._timeout))
 
     def _checkAllPaths(self):
         for data_dir, data in self.DFL.data_dict.iteritems():
