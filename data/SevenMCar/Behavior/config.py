@@ -18,7 +18,6 @@ angle = 90
 #             'SMORES_4':13, 'SMORES_5':12,'SMORES_6':9,}
 ModuleMap = {'SMORES_0':middle, 'SMORES_1':back_middle, 'SMORES_2':front_middle, 'SMORES_3':back_right,
              'SMORES_4':back_left, 'SMORES_5':front_right,'SMORES_6':front_left,}
-
 NeutralPositions = {}
 
 disabledDof=[]
