@@ -173,9 +173,9 @@
         </JointCommand>
         <JointCommand name="Body">
           <commandType>Position</commandType>
-          <targetValue>-89</targetValue>
+          <targetValue>-80</targetValue>
           <period>0</period>
-          <parametricValue>-89</parametricValue>
+          <parametricValue>-80</parametricValue>
         </JointCommand>
         <JointCommand name="FrontWheel">
           <commandType>Position</commandType>
@@ -447,9 +447,9 @@
         </JointCommand>
         <JointCommand name="Body">
           <commandType>Position</commandType>
-          <targetValue>-89</targetValue>
+          <targetValue>-80</targetValue>
           <period>0</period>
-          <parametricValue>-89</parametricValue>
+          <parametricValue>-80</parametricValue>
         </JointCommand>
         <JointCommand name="FrontWheel">
           <commandType>Position</commandType>
@@ -584,9 +584,9 @@
         </JointCommand>
         <JointCommand name="Body">
           <commandType>Position</commandType>
-          <targetValue>-89</targetValue>
+          <targetValue>-80</targetValue>
           <period>0</period>
-          <parametricValue>-89</parametricValue>
+          <parametricValue>-80</parametricValue>
         </JointCommand>
         <JointCommand name="FrontWheel">
           <commandType>Position</commandType>
