@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
-import pdb
+import time
 
 import sys
 sys.path.insert(0,"/home/jim/Embedded/ecosystem/smores_build/smores_reconfig/python/")
@@ -26,6 +26,8 @@ class BehaviorPlanner(object):
         self._current_cmd = None
         self.MP = None
         self.b_name = "SevenMCar"
+        self.last_cmd_update_time = None
+        self._timeout = 0.0
 
         self._current_data = None
 
@@ -44,6 +46,7 @@ class BehaviorPlanner(object):
 
         self._current_data = self.DFL.data_dict[self.b_name]
         self.blob_coords = [0.0,0.0,0.0]
+        self._timeout = 5.0
         self._current_cmd = Twist()
         self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format(self.b_name))
         #self.PCL = PointCloudLoader(topic='/cloud_pcd')
@@ -52,6 +55,7 @@ class BehaviorPlanner(object):
         self.Vis.stop()
 
     def main(self):
+        self.last_cmd_update_time = time.time()
         self.run()
         self.shutdown()
 
@@ -62,6 +66,7 @@ class BehaviorPlanner(object):
     def getCMD_callback(self, data):
         ''' Callback function for topic with location of object being tracked'''
         self._current_cmd = data
+        self.last_cmd_update_time = time.time()
 
     def input2Output(self, para_dict):
 
@@ -81,7 +86,10 @@ class BehaviorPlanner(object):
             para_mapping = self.input2Output(self._current_data.para_dict[self.b_name + "Diff.xml"])
             rospy.logdebug(para_mapping)
             rate.sleep()
-            self.MP.playBehavior(self.b_name + "Diff.xml", para_mapping)
+            if time.time() - self.last_cmd_update_time < self._timeout:
+                self.MP.playBehavior(self.b_name + "Diff.xml", para_mapping)
+            else:
+                rospy.logwarn("Have not got a command for more than {} seconds. Stop playing behaviors.".format(self._timeout))
 
     def getGoalPose(self):
         return self.blob_coords
