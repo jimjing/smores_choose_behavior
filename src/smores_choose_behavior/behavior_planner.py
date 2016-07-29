@@ -9,6 +9,7 @@ import MissionPlayer
 
 import rospy
 from tf import TransformListener
+from geometry_msgs.msg import Twist
 
 from smores_choose_behavior.data_file_loader import DataFileLoader
 from smores_choose_behavior.point_cloud_loader import PointCloudLoader
@@ -22,9 +23,9 @@ class BehaviorPlanner(object):
         self.PCL = None
         self.Vis = None
         self.blob_coords = None # [x,y,z]
+        self._current_cmd = None
         self.MP = None
-        self._collision_tolerance = 0.06 # meters
-        self.b_name = "ThreeMCar"
+        self.b_name = "SevenMCar"
 
         self._current_data = None
 
@@ -37,9 +38,13 @@ class BehaviorPlanner(object):
         self.DFL = DataFileLoader(data_file_directory = "/home/jim/Projects/smores_ros/src/smores_choose_behavior/data")
         self.DFL.loadAllData()
         self.Vis = Visualizer()
-        self.blobPt_sub = rospy.Subscriber("blobPt", Vector3, self.blobPt_callback)
+
+        rospy.Subscriber("blobPt", Vector3, self.blobPt_callback)
+        rospy.Subscriber("/mobile_base/commands/velocity", Twist, self.getCMD_callback)
+
         self._current_data = self.DFL.data_dict[self.b_name]
         self.blob_coords = [0.0,0.0,0.0]
+        self._current_cmd = Twist()
         self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format(self.b_name))
         #self.PCL = PointCloudLoader(topic='/cloud_pcd')
 
@@ -54,6 +59,10 @@ class BehaviorPlanner(object):
         ''' Callback function for topic with location of object being tracked'''
         self.blob_coords = [data.x, data.y, data.z]
 
+    def getCMD_callback(self, data):
+        ''' Callback function for topic with location of object being tracked'''
+        self._current_cmd = data
+
     def input2Output(self, para_dict):
 
         output_mapping = {}
@@ -67,10 +76,10 @@ class BehaviorPlanner(object):
         return output_mapping
 
     def run(self):
-        rate = rospy.Rate(2)
+        rate = rospy.Rate(5)
         while not rospy.is_shutdown():
             para_mapping = self.input2Output(self._current_data.para_dict[self.b_name + "Diff.xml"])
-            rospy.logerr(para_mapping)
+            rospy.logdebug(para_mapping)
             rate.sleep()
             self.MP.playBehavior(self.b_name + "Diff.xml", para_mapping)
 

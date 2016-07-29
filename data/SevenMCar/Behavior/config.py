@@ -12,7 +12,7 @@ from numpy import pi
 
 angle = 90
 ModuleMap = {'SMORES_0':13, 'SMORES_1':12, 'SMORES_2':14, 'SMORES_3':3,
-             'SMORES_4':16, 'SMORES_5':9,'SMORES_6':8,}
+             'SMORES_4':16, 'SMORES_5':9,'SMORES_6':2,}
 NeutralPositions = {}
 
 disabledDof=['tilt']
