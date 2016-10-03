@@ -3,7 +3,7 @@
   <RobotStates>
     <RobotState name="00755db5-fb7c-48d9-b137-7674024569d8">
       <anchorModuleName>SMORES_0</anchorModuleName>
-      <period>6</period>
+      <period>3</period>
       <ModuleStates>
         <ModuleState name="SMORES_0">
           <position>
@@ -22,18 +22,18 @@
               <z>0</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
@@ -159,18 +159,18 @@
               <z>270</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
@@ -296,18 +296,18 @@
               <z>89.99995</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
@@ -433,18 +433,18 @@
               <z>270</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
@@ -570,18 +570,18 @@
               <z>270</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
@@ -707,18 +707,18 @@
               <z>270.000061</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>para_V</parametricValue>
             </JointCommand>
             <JointCommand name="Body">
@@ -844,18 +844,18 @@
               <z>90.0000153</z>
             </eulerAngles>
           </rotation>
-          <period>6</period>
+          <period>3</period>
           <JointCommands>
             <JointCommand name="LeftWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
             <JointCommand name="RightWheel">
               <commandType>Velocity</commandType>
               <targetValue>0</targetValue>
-              <period>6</period>
+              <period>3</period>
               <parametricValue>0</parametricValue>
             </JointCommand>
             <JointCommand name="Body">

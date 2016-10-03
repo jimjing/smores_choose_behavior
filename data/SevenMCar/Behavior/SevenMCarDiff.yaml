@@ -1,8 +1,8 @@
 input:
     x: self._current_cmd.linear.x if self._robot_mission_state.value == 1 else (self.blob_coords[0] if self._robot_mission_state.value == 2 else 0.0)
-    y: self._current_cmd.linear.y if self._robot_mission_state.value == 1 else (self.blob_coords[2] if self._robot_mission_state.value == 2 else 0.0)
+    y: self._current_cmd.angular.z if self._robot_mission_state.value == 1 else (self.blob_coords[1] if self._robot_mission_state.value == 2 else 0.0)
 output:
-    para_V:  x * 30.0 + 30
-    para_W:  -50.0 if -y * 100.0 < -50.0 else (50.0 if -y * 100.0 > 50.0 else -y * 100.0)
-    para_NW: -50.0 if y * 100.0 < -50.0 else (50.0 if y * 100.0 > 50.0 else y * 100.0)
+    para_V:  x * 30.0 + 30 if self._robot_mission_state.value == 1 else 40.0
+    para_W: x/18.0 if self._robot_mission_state.value == 2 else (-50.0 if -y * 100.0 < -50.0 else (50.0 if -y * 100.0 > 50.0 else -y * 100.0)) 
+    para_NW: -x/18.0 if self._robot_mission_state.value == 2 else (-50.0 if y * 100.0 < -50.0 else (50.0 if y * 100.0 > 50.0 else y * 100.0)) 
 
