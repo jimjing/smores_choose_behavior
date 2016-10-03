@@ -4,15 +4,15 @@ from name_map import *
 """
 Simulator names:
 
-3   4
-2-0-1 -> front
 5   6
+2-0-1 -> front
+3   4
 """
 
 from numpy import pi
 
 angle = 90
-ModuleMap = {'SMORES_0':middle, 'SMORES_1':front, 'SMORES_2':back, 'SMORES_3':back_l,'SMORES_4':front_l, 'SMORES_5':back_r, 'SMORES_6':front_r}
+ModuleMap = {'SMORES_0':middle, 'SMORES_1':front, 'SMORES_2':back, 'SMORES_3':back_r,'SMORES_4':front_r, 'SMORES_5':back_l, 'SMORES_6':front_l}
 NeutralPositions = {}
 
 disabledDof=['tilt']

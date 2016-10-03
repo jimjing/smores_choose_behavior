@@ -1,7 +1,6 @@
 input:
-    x: self.clip(0.0,0.2,self._current_cmd.linear.x)
-    y: self.clip(0.0,0.3,self._current_cmd.angular.z)
+    x: self._current_cmd.linear.x
+    y: self._current_cmd.angular.z
 output:
     para_L: x/0.2*100.0-y/0.3*100.0
-    para_R: -x/0.2*100-y/0.3*100.0
-
+    para_R: -x/0.2*100.0-y/0.3*100.0
