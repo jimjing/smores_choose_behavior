@@ -8,12 +8,15 @@ from subprocess import call
 import pdb
 
 import sys
+from math import pi
 sys.path.insert(0,"/home/jim/Embedded/ecosystem/smores_build/smores_reconfig/python/")
 import MissionPlayer
+from name_map import *
 
 import rospy
 from tf import TransformListener
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Int32
 
 from smores_choose_behavior.data_file_loader import DataFileLoader
 from smores_choose_behavior.point_cloud_loader import PointCloudLoader
@@ -32,6 +35,7 @@ class BehaviorPlanner(object):
         self.PCL = None
         self.Vis = None
         self.blob_coords = None # [x,y,z]
+        self.fetch_behavior = 0
         self._current_cmd = None
         self.MP = None
         self.b_name = "Tank"
@@ -41,6 +45,8 @@ class BehaviorPlanner(object):
         self._blob_reset_timer = None
         self._cmd_reset_timer = None
         self.tf_listener = None
+        self.need_reconf = False
+        self.done_reconf = False
 
         self._current_data = None
 
@@ -54,8 +60,9 @@ class BehaviorPlanner(object):
         self.DFL.loadAllData()
         self.Vis = Visualizer()
 
-        rospy.Subscriber("blobPt", Vector3, self.blobPt_callback, queue_size=1)
+        #rospy.Subscriber("blobPt", Vector3, self.blobPt_callback, queue_size=1)
         rospy.Subscriber("/navigation_velocity_smoother/raw_cmd_vel", Twist, self.getCMD_callback, queue_size=1)
+        rospy.Subscriber("/config_state", Int32, self.object_fetch_callback, queue_size=1)
 
         self._current_data = self.DFL.data_dict[self.b_name]
         self.blob_coords = [0.0,0.0,0.0]
@@ -66,6 +73,7 @@ class BehaviorPlanner(object):
         self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format(self.b_name))
         self._robot_mission_state = RobotMission.Idle
         self.tf_listener = TransformListener()
+
         #self.PCL = PointCloudLoader(topic='/cloud_pcd')
        #t = Thread(target=self.fakeSignal)
        #t.setDaemon(True)
@@ -108,9 +116,24 @@ class BehaviorPlanner(object):
         self._blob_reset_timer = Timer(self._timeout, self.resetRobotState)
         self._blob_reset_timer.start()
 
+    def object_fetch_callback(self, data):
+        '''The callback for getting which behavior to run to fetch the object'''
+        if data is not None:
+            if data == -1:
+                rospy.logerr("Cannot find a path to object!")
+            elif data == 0:
+                rospy.logwarn("Why do you send me a 0!?")
+            else:
+                rospy.logdebug("Recieve fetch behavior {}".format(data))
+                self.fetch_behavior = data
+                if self.fetch_behavior == 2:
+                    self.need_reconf = True
+                self.setRobotState(RobotMission.ToObject)
+
     def getCMD_callback(self, data):
         ''' Callback function for topic with location of object being tracked'''
         if data is not None:
+            #rospy.loginfo("Linear is {} and Angular is {}.".format(data.linear.x, data.angular.z))
             if (data.linear.x != 0.0 or data.angular.z != 0.0):
                 self._current_cmd = data
 
@@ -149,29 +172,55 @@ class BehaviorPlanner(object):
             para_mapping = self.input2Output(self._current_data.para_dict[self.b_name + "_diff.xml"])
             rospy.logdebug(para_mapping)
             rate.sleep()
-            rospy.logdebug("Blob_coords is {}".format(self.blob_coords))
-            try:
-                (world_tag_pose,world_tag_rot) = self.tf_listener.lookupTransform("camera_link","colorObj", rospy.Time(0))
-                rospy.logdebug("Distance from the object is {}".format(world_tag_pose))
-            except:
-                rospy.logdebug("Did not find object transform.")
-            if self._robot_mission_state != RobotMission.Idle:
+            #rospy.logdebug("Blob_coords is {}".format(self.blob_coords))
+            #try:
+            #    (world_tag_pose,world_tag_rot) = self.tf_listener.lookupTransform("camera_link","colorObj", rospy.Time(0))
+            #    rospy.logdebug("Distance from the object is {}".format(world_tag_pose))
+            #except:
+            #    rospy.logdebug("Did not find object transform.")
+            if self._robot_mission_state == RobotMission.Explore:
                 self.MP.playBehavior(self.b_name + "_diff.xml", para_mapping)
+            elif self._robot_mission_state == RobotMission.ToObject:
+                if self.need_reconf:
+                    if not self.done_reconf:
+                        # Do reconf here
+                        rospy.loginfo("Reached reconf location. Stop!")
+                        self.MP.playBehavior(self.b_name + "_Reconf.xml", para_mapping)
+                        time.sleep(0.5)
+                        self.MP.playBehavior(self.b_name + "_Reconf.xml", para_mapping)
+
+                        self.MP.c.killCluster()
+                        time.sleep(1)
+                    else:
+                        # Run proboscis behaviors here
+                        self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format("Proboscis"))
+
+                        if self.fetch_behavior == 2:
+                            # Run tunnel
+                            rospy.loginfo("Running tunnel...")
+                        elif self.fetch_behavior == 3:
+                            # Run ledge
+                            rospy.loginfo("Running ledge...")
+                else:
+                    # Run car behavior here
+                    rospy.loginfo("Running car...")
+                    self.MP.c.mods[front].move.command_position('tilt', -5.0/180*pi,1)
+                    rospy.sleep(1)
+                    for i in xrange(8):
+                        if i == 7:
+                            self.MP.c.mods[front].move.command_position('tilt', 10.0/180*pi,3)
+                        self.MP.playBehavior(self.b_name + "_diff.xml", {"para_L":-90.0, "para_R":90.0})
+                        rospy.sleep(0.5)
+                        self.MP.c.mods[front].mag.control('top', 'on')
+                        rospy.sleep(0.5)
+                    rospy.loginfo("Pickup object")
+                    rospy.sleep(5)
+
+                    for i in xrange(8):
+                        self.MP.playBehavior(self.b_name + "_diff.xml", {"para_L":90.0, "para_R":-90.0})
+                    return
             else:
                 rospy.logwarn("Have not got a command for more than {} seconds. System idling.".format(self._timeout))
-
-            if self.blob_coords[1] > 0.0 and self.blob_coords[1] < 130.0 and self.blob_coords[0] < 100.0 and self.blob_coords[0] > -100.0:
-                rospy.loginfo("Reached reconf location. Stop!")
-                self.MP.playBehavior(self.b_name + "PreReconf.xml", para_mapping)
-                time.sleep(0.5)
-                self.MP.playBehavior(self.b_name + "PreReconf.xml", para_mapping)
-
-                self.MP.c.killCluster()
-                time.sleep(1)
-                #pdb.set_trace()
-                #call(["rosrun", "path_follow", "path_follow_node.py"])
-                return
-
 
     def _checkAllPaths(self):
         for data_dir, data in self.DFL.data_dict.iteritems():

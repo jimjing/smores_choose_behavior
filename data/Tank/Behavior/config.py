@@ -19,5 +19,6 @@ disabledDof=['tilt']
 speed_scale=0.7
 behaviorFiles = {
    'Tank_diff.xml':'Tank_diff.xml',
+   'Tank_Reconf.xml':'Tank_Reconf.xml',
    }
 
