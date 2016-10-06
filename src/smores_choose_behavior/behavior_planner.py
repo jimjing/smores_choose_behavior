@@ -7,9 +7,9 @@ from aenum import Enum
 from subprocess import call
 import pdb
 
-import sys
+import sys, os
 from math import pi
-sys.path.insert(0,"/home/jim/Embedded/ecosystem/smores_build/smores_reconfig/python/")
+sys.path.insert(0,"/home/{}/Embedded/ecosystem/smores_build/smores_reconfig/python/".format(os.environ['USER']))
 import MissionPlayer
 from name_map import *
 
@@ -47,6 +47,7 @@ class BehaviorPlanner(object):
         self.tf_listener = None
         self.need_reconf = False
         self.done_reconf = False
+        self.data_file_directory = ""
 
         self._current_data = None
 
@@ -56,7 +57,12 @@ class BehaviorPlanner(object):
         self.main()
 
     def _initialize(self):
-        self.DFL = DataFileLoader(data_file_directory = "/home/jim/Projects/smores_ros/src/smores_choose_behavior/data")
+
+        if os.environ['USER'] == 'jim':
+            self.data_file_directory = "/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/"
+        elif os.environ['USER'] == 'tarik':
+            self.data_file_directory = "/home/tarik/catkin_ws/src/smores_choose_behavior/data/"
+        self.DFL = DataFileLoader(data_file_directory = self.data_file_directory)
         self.DFL.loadAllData()
         self.Vis = Visualizer()
 
@@ -70,7 +76,7 @@ class BehaviorPlanner(object):
         self._current_cmd = Twist()
         self._blob_reset_timer = Timer(self._timeout, self.resetRobotState)
         self._cmd_reset_timer = Timer(self._timeout, self.resetRobotState)
-        self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format(self.b_name))
+        self.MP = MissionPlayer.MissionPlayer(self.data_file_directory + "{}/Behavior".format(self.b_name))
         self._robot_mission_state = RobotMission.Idle
         self.tf_listener = TransformListener()
 
@@ -193,7 +199,7 @@ class BehaviorPlanner(object):
                         time.sleep(1)
                     else:
                         # Run proboscis behaviors here
-                        self.MP = MissionPlayer.MissionPlayer("/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/{}/Behavior".format("Proboscis"))
+                        self.MP = MissionPlayer.MissionPlayer(self.data_file_directory + "{}/Behavior".format("Proboscis"))
 
                         if self.fetch_behavior == 2:
                             # Run tunnel
