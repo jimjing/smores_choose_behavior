@@ -21,7 +21,7 @@ from std_msgs.msg import Int32
 from smores_choose_behavior.data_file_loader import DataFileLoader
 from smores_choose_behavior.point_cloud_loader import PointCloudLoader
 from smores_choose_behavior.visualizer import Visualizer
-from collision_detection.srv import *
+#from collision_detection.srv import *
 from geometry_msgs.msg import Pose, PoseArray, Vector3
 
 class RobotMission(Enum):
