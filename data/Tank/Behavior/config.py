@@ -15,7 +15,7 @@ angle = 90
 ModuleMap = {'SMORES_0':middle, 'SMORES_1':front, 'SMORES_2':back, 'SMORES_3':back_r,'SMORES_4':front_r, 'SMORES_5':back_l, 'SMORES_6':front_l}
 NeutralPositions = {}
 
-disabledDof=['tilt']
+disabledDof=[]
 speed_scale=0.7
 behaviorFiles = {
    'Tank_diff.xml':'Tank_diff.xml',
