@@ -16,7 +16,7 @@ from name_map import *
 import rospy
 from tf import TransformListener
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Int32
+from std_msgs.msg import Int32, String
 
 from smores_choose_behavior.data_file_loader import DataFileLoader
 from smores_choose_behavior.point_cloud_loader import PointCloudLoader
@@ -69,6 +69,7 @@ class BehaviorPlanner(object):
         #rospy.Subscriber("blobPt", Vector3, self.blobPt_callback, queue_size=1)
         rospy.Subscriber("/navigation_velocity_smoother/raw_cmd_vel", Twist, self.getCMD_callback, queue_size=1)
         rospy.Subscriber("/config_state", Int32, self.object_fetch_callback, queue_size=1)
+        rospy.Subscriber("/reconf_status", String, self.reconf_status_callback, queue_size=1)
 
         self._current_data = self.DFL.data_dict[self.b_name]
         self.blob_coords = [0.0,0.0,0.0]
@@ -122,6 +123,9 @@ class BehaviorPlanner(object):
         self._blob_reset_timer = Timer(self._timeout, self.resetRobotState)
         self._blob_reset_timer.start()
 
+    def reconf_status_callback(self, data):
+        self.done_reconf = True
+
     def object_fetch_callback(self, data):
         '''The callback for getting which behavior to run to fetch the object'''
         if data is not None:
@@ -130,8 +134,8 @@ class BehaviorPlanner(object):
             elif data == 0:
                 rospy.logwarn("Why do you send me a 0!?")
             else:
-                rospy.logdebug("Recieve fetch behavior {}".format(data))
-                self.fetch_behavior = data
+                rospy.logdebug("Recieve fetch behavior {}".format(data.data))
+                self.fetch_behavior = data.data
                 if self.fetch_behavior == 2:
                     self.need_reconf = True
                 self.setRobotState(RobotMission.ToObject)
@@ -184,26 +188,62 @@ class BehaviorPlanner(object):
             #    rospy.logdebug("Distance from the object is {}".format(world_tag_pose))
             #except:
             #    rospy.logdebug("Did not find object transform.")
-            if self._robot_mission_state == RobotMission.Explore:
-                self.MP.playBehavior(self.b_name + "_diff.xml", para_mapping)
-            elif self._robot_mission_state == RobotMission.ToObject:
-                if self.need_reconf:
+
+            #if self._robot_mission_state == RobotMission.Explore:
+            #    self.MP.playBehavior(self.b_name + "_diff.xml", para_mapping)
+            #elif self._robot_mission_state == RobotMission.ToObject:
+            if True:
+                #if self.need_reconf:
+                if True:
                     if not self.done_reconf:
                         # Do reconf here
                         rospy.loginfo("Reached reconf location. Stop!")
-                        self.MP.playBehavior(self.b_name + "_Reconf.xml", para_mapping)
+                        self.MP.playBehavior(self.b_name + "_Reconf.xml", {'para_L':0.0, 'para_R':0.0})
                         time.sleep(0.5)
-                        self.MP.playBehavior(self.b_name + "_Reconf.xml", para_mapping)
+                        self.MP.playBehavior(self.b_name + "_Reconf.xml", {'para_L':0.0, 'para_R':0.0})
 
                         self.MP.c.killCluster()
+                        self.MP = None
                         time.sleep(1)
-                    else:
-                        # Run proboscis behaviors here
-                        self.MP = MissionPlayer.MissionPlayer(self.data_file_directory + "{}/Behavior".format("Proboscis"))
 
-                        if self.fetch_behavior == 2:
+                        pub = rospy.Publisher('reconf_signal', String, queue_size=10)
+                        while not self.done_reconf:
+                            rospy.logdebug("Waiting for reconfiguration to finish.")
+                            pub.publish(String("do"))
+                            rate.sleep()
+
+                        rospy.sleep(5)
+                    if self.done_reconf:
+                        # Run proboscis behaviors here
+                        if self.MP is None:
+                            self.MP = MissionPlayer.MissionPlayer(self.data_file_directory + "{}/Behavior".format("newPro"))
+
+                        #if self.fetch_behavior == 2:
+                        if True:
                             # Run tunnel
                             rospy.loginfo("Running tunnel...")
+                            self.MP.playBehavior("newProPostReconf.xml", {})
+                            rospy.sleep(2)
+                            rospy.loginfo("Moving forward with proboscis...")
+                            for i in xrange(10):
+                                if i == 9:
+                                    self.MP.c.mods[front_r].move.command_position('tilt', 10.0/180*pi,3)
+                                self.MP.playBehavior("newProTunnel.xml", {'para_L':30,'para_R':30,'para_LB':-90,'para_RB':90 })
+
+                                rospy.sleep(3)
+                                self.MP.c.mods[front_r].mag.control('top', 'on')
+                                rospy.sleep(0.1)
+
+                            rospy.loginfo("Pickup object")
+                            rospy.sleep(2)
+
+                            rospy.loginfo("Moving backward with proboscis...")
+                            for i in xrange(10):
+                                self.MP.playBehavior("newProTunnel.xml", {'para_L':-30,'para_R':-30,'para_LB':90,'para_RB':-90 })
+                                rospy.sleep(3)
+
+                            rospy.loginfo("All done!")
+                            return
                         elif self.fetch_behavior == 3:
                             # Run ledge
                             rospy.loginfo("Running ledge...")
