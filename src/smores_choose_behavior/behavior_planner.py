@@ -2,27 +2,23 @@
 
 import numpy as np
 import time
-from threading import Timer, Thread
+from threading import Timer
 from aenum import Enum
-from subprocess import call
-import pdb
 
 import sys, os
 from math import pi
-sys.path.insert(0,"/home/{}/Embedded/ecosystem/smores_build/smores_reconfig/python/".format(os.environ['USER']))
+#TODO: Make a function to do this
+sys.path.insert(0,"/home/{}/Projects/Embedded/ecosystem/smores_build/smores_reconfig/python/".format(os.environ['USER']))
 import MissionPlayer
 from name_map import *
 
 import rospy
 from tf import TransformListener
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Vector3
 from std_msgs.msg import Int32, String
 
 from smores_choose_behavior.data_file_loader import DataFileLoader
-from smores_choose_behavior.point_cloud_loader import PointCloudLoader
-from smores_choose_behavior.visualizer import Visualizer
-#from collision_detection.srv import *
-from geometry_msgs.msg import Pose, PoseArray, Vector3
+from nbv_generation.srv import NBVRequest
 
 class RobotMission(Enum):
     Explore = 1
@@ -32,8 +28,6 @@ class RobotMission(Enum):
 class BehaviorPlanner(object):
     def __init__(self):
         self.DFL = None
-        self.PCL = None
-        self.Vis = None
         self.blob_coords = None # [x,y,z]
         self.fetch_behavior = 0
         self._current_cmd = None
@@ -59,12 +53,11 @@ class BehaviorPlanner(object):
     def _initialize(self):
 
         if os.environ['USER'] == 'jim':
-            self.data_file_directory = "/home/jim/Projects/smores_ros/src/smores_choose_behavior/data/"
+            self.data_file_directory = "/home/jim/Projects/smores_ws/src/smores_choose_behavior/data/"
         elif os.environ['USER'] == 'tarik':
             self.data_file_directory = "/home/tarik/catkin_ws/src/smores_choose_behavior/data/"
         self.DFL = DataFileLoader(data_file_directory = self.data_file_directory)
         self.DFL.loadAllData()
-        self.Vis = Visualizer()
 
         #rospy.Subscriber("blobPt", Vector3, self.blobPt_callback, queue_size=1)
         rospy.Subscriber("/navigation_velocity_smoother/raw_cmd_vel", Twist, self.getCMD_callback, queue_size=1)
@@ -81,20 +74,6 @@ class BehaviorPlanner(object):
         self._robot_mission_state = RobotMission.Idle
         self.tf_listener = TransformListener()
 
-        #self.PCL = PointCloudLoader(topic='/cloud_pcd')
-       #t = Thread(target=self.fakeSignal)
-       #t.setDaemon(True)
-       #t.start()
-
-    def fakeSignal(self):
-        while not rospy.is_shutdown():
-            cmd = raw_input("e for explore, o for object: ")
-            if cmd  == 'e':
-                self.getCMD_callback(None)
-            elif cmd  == 'o':
-                self.blobPt_callback(None)
-            cmd = ""
-
     def setRobotState(self, state):
         if state == self._robot_mission_state:
             return
@@ -106,7 +85,7 @@ class BehaviorPlanner(object):
         self.setRobotState(RobotMission.Idle)
 
     def shutdown(self):
-        self.Vis.stop()
+        pass
 
     def main(self):
         self.run()
@@ -267,32 +246,3 @@ class BehaviorPlanner(object):
                     return
             else:
                 rospy.logwarn("Have not got a command for more than {} seconds. System idling.".format(self._timeout))
-
-    def _checkAllPaths(self):
-        for data_dir, data in self.DFL.data_dict.iteritems():
-            rospy.loginfo("Checking data directory {!r}".format(data_dir))
-            for path_file_name, path in data.path_dict.iteritems():
-                rospy.loginfo("Checking path {!r}".format(path_file_name))
-                self._checkCollisionBehaviorWithPointCloud(path)
-
-    def _checkCollisionBehaviorWithPointCloud(self, behavior_path):
-        rospy.loginfo("Sending collision request ...")
-        rospy.wait_for_service('path_env_collision')
-        try:
-            path_env_collision_srv = rospy.ServiceProxy('path_env_collision', CheckCollision)
-
-            p_array = PoseArray()
-            p_array.header.frame_id = "camera_link";
-            p_array.header.stamp = rospy.Time();
-            for pt in behavior_path:
-                p_array.poses.append(pt)
-
-            self.Vis.setPubPath(p_array.poses)
-            resp = path_env_collision_srv(p_array)
-            rospy.loginfo("Get collision ... {}".format(resp.collide))
-
-        except rospy.ServiceException, e:
-            rospy.logerr("Service call failed: {}".format(e))
-
-        return resp.collide
-
